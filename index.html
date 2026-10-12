@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reviewer ng Lahat ng Subject</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --background: #090b14;
+            --background-light: #111827;
+            --card: rgba(22, 28, 45, 0.82);
+            --card-hover: rgba(31, 40, 64, 0.95);
+            --text: #f8fafc;
+            --muted: #aab4c8;
+            --blue: #60a5fa;
+            --purple: #a78bfa;
+            --cyan: #22d3ee;
+            --border: rgba(148, 163, 184, 0.18);
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+.download-button {
+    display: inline-block;
+    margin: 16px 0;
+    padding: 12px 20px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.download-button:hover {
+    background: #1d4ed8;
+}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: "Inter", Arial, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: var(--text);
+            line-height: 1.6;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(96, 165, 250, 0.16), transparent 28%),
+                radial-gradient(circle at 90% 15%, rgba(167, 139, 250, 0.15), transparent 30%),
+                radial-gradient(circle at 50% 100%, rgba(34, 211, 238, 0.08), transparent 35%),
+                var(--background);
+        }
+
+        header {
+            position: relative;
+            overflow: hidden;
+            padding: 85px 20px 75px;
+            text-align: center;
+            background:
+                linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.8)),
+                linear-gradient(135deg, #2563eb, #7c3aed);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        header::before,
+        header::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(4px);
+            opacity: 0.35;
+        }
+
+        header::before {
+            width: 260px;
+            height: 260px;
+            top: -140px;
+            left: 8%;
+            background: #60a5fa;
+        }
+
+        header::after {
+            width: 320px;
+            height: 320px;
+            right: 5%;
+            bottom: -210px;
+            background: #c084fc;
+        }
+
+        header h1,
+        header p {
+            position: relative;
+            z-index: 1;
+        }
+
+        header h1 {
+            margin-bottom: 14px;
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        header p {
+            max-width: 760px;
+            margin: auto;
+            color: #dbeafe;
+            font-size: 1rem;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 16px;
+            text-align: center;
+            background: rgba(9, 11, 20, 0.82);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(18px);
+        }
+
+        nav a {
+            display: inline-block;
+            margin: 0 14px;
+            color: #dbeafe;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            width: min(92%, 1200px);
+            margin: 55px auto;
+        }
+
+        .intro {
+            position: relative;
+            overflow: hidden;
+            padding: 32px;
+            margin-bottom: 48px;
+            text-align: center;
+            background: linear-gradient(
+                145deg,
+                rgba(30, 41, 59, 0.9),
+                rgba(15, 23, 42, 0.8)
+            );
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: 0 18px 45px var(--shadow);
+        }
+
+        .intro::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            top: -100px;
+            right: -50px;
+            border-radius: 50%;
+            background: rgba(96, 165, 250, 0.16);
+            filter: blur(5px);
+        }
+
+        .intro h2 {
+            position: relative;
+            margin-bottom: 12px;
+            color: var(--blue);
+            font-size: 1.65rem;
+        }
+
+        .intro p {
+            position: relative;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 1rem;
+        }
+
+        #dev-note,
+        #footer-note {
+            opacity: 1;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .section-title {
+            margin-bottom: 24px;
+            color: #e0e7ff;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 60px;
+            height: 4px;
+            margin: 12px auto 0;
+            background: linear-gradient(90deg, var(--blue), var(--purple));
+            border-radius: 20px;
+        }
+
+        .subjects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+            max-height: 72vh;
+            padding: 12px;
+            margin-bottom: 45px;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        .subjects::-webkit-scrollbar {
+            width: 9px;
+        }
+
+        .subjects::-webkit-scrollbar-track {
+            background: rgba(148, 163, 184, 0.1);
+            border-radius: 20px;
+        }
+
+        .subjects::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--blue), var(--purple));
+            border-radius: 20px;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            min-height: 220px;
+            padding: 26px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--blue);
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(14px);
+            transition:
+                transform 0.35s ease,
+                background 0.35s ease,
+                box-shadow 0.35s ease;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            right: -45px;
+            bottom: -45px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .card:hover {
+            background: var(--card-hover);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 38px rgba(0, 0, 0, 0.45);
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+            color: #dbeafe;
+            font-size: 1.25rem;
+        }
+
+        .card p {
+            margin-bottom: 20px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .card ul {
+            padding-left: 20px;
+        }
+
+        .card li {
+            margin-bottom: 10px;
+            color: var(--muted);
+        }
+
+        .card a {
+            color: var(--blue);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .card a:hover {
+            color: var(--cyan);
+            text-decoration: underline;
+        }
+
+        .ethics {
+            border-left-color: #f87171;
+        }
+
+        .filipino {
+            border-left-color: #fb923c;
+        }
+
+        .pathfit {
+            border-left-color: #2dd4bf;
+        }
+
+        .assessment {
+            border-left-color: #38bdf8;
+        }
+
+        .curriculum {
+            border-left-color: #a78bfa;
+        }
+
+        .art {
+            border-left-color: #fb7185;
+        }
+
+        .music {
+            border-left-color: #facc15;
+        }
+
+        .technology {
+            border-left-color: #22d3ee;
+        }
+
+        .learner-centered {
+            border-left-color: #c084fc;
+        }
+
+        footer {
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            color: #cbd5e1;
+            text-align: center;
+            background: rgba(3, 7, 18, 0.9);
+            border-top: 1px solid var(--border);
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        footer p {
+            max-width: 900px;
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                padding: 65px 18px 55px;
+            }
+
+            header h1 {
+                letter-spacing: -1px;
+            }
+
+            header p {
+                font-size: 0.9rem;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 35px auto;
+            }
+
+            .intro {
+                padding: 26px 18px;
+                border-radius: 18px;
+            }
+
+            .subjects {
+                grid-template-columns: 1fr;
+                max-height: none;
+                padding: 4px;
+            }
+
+            .card {
+                min-height: 190px;
+                padding: 23px;
+            }
+
+            footer {
+                min-height: 105px;
+                padding: 22px 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Flash Card</h1>
+
+        <p>
+            Ethics, Filipino, PATHFIT, Assessment, Curriculum, Arts,
+            Music, Technology for Teaching, and Learner-Centered
+        </p>
+    </header>
+<a class="download-button"
+   href="zip/Flashcardwebsitemidterm.zip"
+   download>
+    Download All Flashcards
+</a>
+    <nav>
+        <a href="#subjects">Subjects</a>
+    </nav>
+
+    <main class="container">
+
+        <section class="intro">
+            <h2>Dev Note</h2>
+            <p id="dev-note">What if may quiz sa Ethics.</p>
+        </section>
+
+        <section id="subjects">
+            <h2 class="section-title">Flash Cards</h2>
+
+            <div class="subjects">
+
+                <div class="card ethics">
+                    <h3>Ethics</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="ethics/flashcard j.1.0.8.html">
+                                Open Flashcard Ethics Week 1
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card filipino">
+                    <h3>Filipino</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="filipino/Flashcard filipino J.1.0.8.html">
+                                Open Flashcard Filipino Week 1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="filipino/Flashcard filipino J.1.0.8 - 2.html">
+                                Open Flashcard Filipino Week 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card pathfit">
+                    <h3>tech and music</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="Flashcard music J.1.0.8.html">
+                                Open Flashcard music Week 1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="Flashcard technology J.1.0.8.html">
+                                Open Flashcard technology Week 1
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card assessment">
+                    <h3>Assessment</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="assessment/Flashcard week 1 J.1.0.8 -.html">
+                                Open Flashcard Assessment Week 1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="assessment/Flashcard week 2 J.1.0.8 -.html">
+                                Open Flashcard Assessment Week 2
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card curriculum">
+                    <h3>Curriculum</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="curriculum/flashcard curriculum j.1.0.8 .html">
+                                Open Flashcard Curriculum Week 1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="curriculum/flashcard curriculum 2 j.1.0.8 .html">
+                                Open Flashcard Curriculum Week 2
+                            </a>
+                        </li>
+                        <li>
+                            <a href="curriculum/flashcard curriculum 3 j.1.0.8 .html">
+                                Open Flashcard Curriculum Week 3
+                            </a>
+                        </li>
+                        <li>
+                            <a href="curriculum/flashcard curriculum 4 j.1.0.8  .html">
+                                Open Flashcard Curriculum Week 4
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card art">
+                    <h3>Art</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="art/Flashcard art J.1.0.8 - Copy.html">
+                                Open Flashcard Art Week 1
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card learner-centered">
+                    <h3>Learner-Centered</h3>
+                    <p>Midterm</p>
+                    <ul>
+                        <li>
+                            <a href="learner centered/Flashcard J.1.0.8.html">
+                                Open Flashcard Learner-Centered Week 1
+                            </a>
+                        </li>
+                        <li>
+                            <a href="learner centered/Flashcard J.1.0.8 -2.html">
+                                Open Flashcard Learner-Centered Week 2
+                            </a>
+                        </li>
+						                        <li>
+                            <a href="learner centered/Flashcard J.1.0.8 -3.html">
+                                Open Flashcard Learner-Centered Week 3
+                            </a>
+                        </li>
+                        </li>
+						                        <li>
+                            <a href="learner centered/Flashcard J.1.0.8 -4.html">
+                                Open Flashcard Learner-Centered Week 4
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p id="footer-note">
+            Kung ang 2 plus 2 ay 4 at ang 1 plus 1 ay 2. Bakit me plus you ay zero?
+        </p>
+    </footer>
+
+    <script>
+        const devNotes = [
+            "What if may quiz sa Ethics.",
+            "What if may quiz sa Filipino.",
+            "What if may quiz sa PATHFIT.",
+            "What if may quiz sa Assessment.",
+            "What if may quiz sa Curriculum.",
+            "What if may quiz sa Arts.",
+            "What if may quiz sa Music.",
+            "What if may quiz sa Technology for Teaching.",
+            "What if may quiz sa Learner-Centered."
+        ];
+
+        const footerNotes = [
+            "Kung ang 2 plus 2 ay 4 at ang 1 plus 1 ay 2. Bakit me plus you ay zero?",
+            "Malabo: Minsan mata, minsan ikaw.",
+            "Ang crush ay parang math problem, kung hindi mo makuha, titigan mo nalang.",
+            "Taken ka nga, for granted naman.",
+            "Alam mo ba ang salitang PAGMAMAHAL? Hindi ko yan pinag-aralan pero sayo ko yan natutunan.",
+            "Hindi mo pa nga ako binabato, tinamaan na ako sayo.",
+            "Ang love parang coke minsan zero minsan sakto pero pag ako ang nagmahal sisiguraduhin kong ikaw mismo at walang kasalo.",
+            "What if ayaw mong mag-move on dahil iniisip mo na may chance na gusto ka pa rin niya.",
+            "Mahal mo ba ako dahil kailangan mo ako? O kailangan mo ako kaya mahal mo ako?",
+            "She had me at my worst. You had me at my best. At binalewala mo lang lahat iyon.",
+            "Hindi lahat ng nagpapasaya sa atin ay tama.",
+            "Diyan ka naman magaling e! Magaling ka magpaasa.",
+            "Sabihin mo sa akin—may dahilan pa ba ako para hindi umalis?",
+            "Buti pa ang deadline, hinahabol.",
+            "Minsan hindi naman tayo talo sa pag-ibig; mali lang talaga ang taong minahal natin.",
+            "Hindi pala sapat na mahal mo ang isang tao kung hindi ka naman niya kayang ipaglaban.",
+            "Hindi ka nawala; pinakawalan mo lang ako.",
+            "Ikaw pa rin, kahit ayoko na.",
+            "Masakit pala kapag ikaw lang ang may pakialam.",
+            "Hindi ako nagkulang, nagkulang ka lang umintindi.",
+            "Sana balang araw piliin mo ako, hindi lang kapag wala nang ibang natira.",
+            "Ang hirap magmahal ng lalaking hindi sigurado kung ako ba talaga ang gusto niya.",
+            "Kung pipili ako ulit, ikaw pa rin ang pipiliin ko.",
+            "Sa pag-ibig walang bulag, pipi at bingi, pero tanga madami.",
+            "Ano ang paborito mong lomi? Ang LOMIgaya ka sa piling ko.",
+            "Stay safe ka nang stay safe... bakit nung safe ka sa akin, nag-stay ka ba?"
+        ];
+
+        const devNote = document.getElementById("dev-note");
+        const footerNote = document.getElementById("footer-note");
+
+        let currentDevNote = 0;
+        let currentFooterNote = 0;
+
+        function fadeChange(element, text) {
+            element.style.opacity = "0";
+
+            setTimeout(() => {
+                element.textContent = text;
+                element.style.opacity = "1";
+            }, 1500);
+        }
+
+        setInterval(() => {
+            currentDevNote =
+                (currentDevNote + 1) % devNotes.length;
+
+            fadeChange(
+                devNote,
+                devNotes[currentDevNote]
+            );
+        }, 12500);
+
+        setInterval(() => {
+            currentFooterNote =
+                (currentFooterNote + 1) % footerNotes.length;
+
+            fadeChange(
+                footerNote,
+                footerNotes[currentFooterNote]
+            );
+        }, 15000);
+    </script>
+
+</body>
+</html>
